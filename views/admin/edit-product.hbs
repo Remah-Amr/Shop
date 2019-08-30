@@ -1,0 +1,35 @@
+ <main>
+        
+         {{#if errorMessage}}
+             <div class="user-message user-message--error" >{{errorMessage}}</div>
+        {{/if}}
+        <form class="product-form" action="/admin/{{#if editing}}edit-product{{else}}add-product{{/if}}" method="POST" enctype="multipart/form-data">
+            <div class="form-control">
+                {{!--i get in route 'edit' the id from params which before ? , then if fetch product and send it--}}
+                <label for="title">Title</label> 
+                <input type="text" name="title" id="title" {{#ifCond editing '||' keepUserInput}}value='{{product.title}}'{{/ifCond}}  >
+            </div>
+            {{!-- <div class="form-control">
+                <label for="imageUrl">Image URL</label>
+                <input type="text" name="imageUrl" id="imageUrl" {{#ifCond editing '||' keepUserInput}}value='{{product.imageUrl}}'{{/ifCond}} >
+            </div> --}}
+            <div class="form-control">
+                <label for="image">Image</label>
+                <input type="file" name="image" id="image">
+            </div>
+            <div class="form-control">
+                <label for="price">Price</label>
+                <input type="number" name="price" id="price" step="0.01" {{#ifCond editing '||' keepUserInput}}value='{{product.price}}'{{/ifCond}} >
+            </div>
+            <div class="form-control">
+                <label for="description">Description</label>
+                <textarea name="description" id="description" rows="5">{{#ifCond editing '||' keepUserInput}}{{product.description}}{{/ifCond}}</textarea>
+            </div>
+            {{!--if in editing mode the object already has id , but if new it not so i pass the id to still same after update--}}
+             {{#ifCond editing '||' keepUserInput}}
+                <input type="hidden" value="{{product._id}}" name="productId">
+             {{/ifCond}}
+            <input type="hidden" value='{{csrfToken}}' name='_csrf'>
+            <button class="btn" type="submit">{{#if editing}}Edit Product{{else}}Add Product{{/if}}</button>
+        </form>
+</main>

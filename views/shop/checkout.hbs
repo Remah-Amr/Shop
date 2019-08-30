@@ -1,0 +1,30 @@
+<main>
+    <ul class="cart__item-list">
+        {{#each products}}
+               <li class="cart__item">
+                <h1>{{productId.title}} </h1>
+                <h2>Quantity: {{qty}}</h2> 
+               </li>
+        {{/each}}
+    </ul> 
+    <div class="centered">
+        <h2>total : {{total}}</h2>
+    </div>
+    <div class="centered">
+      {{!-- add button to checkout page --}}
+      {{!-- password remah654312 , email: remah3335 --}}
+      {{!-- stripe has his own csrftoken , so you don't need to pass it to form here so you have to disable csrftoken from app--}}
+                <form action="/create-order" method="POST"> 
+                    <script 
+                      src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                      data-key="pk_test_4MGiEZzD470hVj2I3OP0wPan009ypNi5HO" {{!-this data to make stripe know this belong to any account--}}
+                      data-amount="{{totalCard}}" 
+                      data-name="Your Order"
+                      data-description="All the items you ordewred"
+                      data-image="https://stripe.com/img/documentation/checkout/marketplace.png"
+                      data-locale="auto"
+                      data-currency="usd">
+                    </script>
+                  </form>
+            </div>
+</main>

@@ -1,0 +1,5 @@
+<form action="/cart" method="POST">
+        <button type="submit" class="btn">Add To Cart</button>
+        <input type="hidden" value='{{csrfToken}}' name='_csrf'>
+        <input type="hidden" name="productId" value="{{product._id}}"> {{!-- i can pass id by params , then catch by req.params.name, the same thing --}}
+    </form>

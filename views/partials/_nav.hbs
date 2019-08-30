@@ -1,0 +1,94 @@
+<div class="backdrop"></div>
+<header class="main-header">
+    <button id="side-menu-toggle">Menu</button>
+    <nav class="main-header__nav">
+        <ul class="main-header__item-list">
+            <li class="main-header__item">
+                <a class="{{#if activeShop }}active{{/if}}" href="/">Shop</a>
+            </li>
+            <li class="main-header__item">
+                <a {{#if activeProducts}}class="active" {{/if}} href="/products">Products</a>
+            </li>
+            {{#if user}}
+            <li class="main-header__item">
+                <a {{#if activeCart}}class="active" {{/if}} href="/cart">Cart</a>
+            </li>
+            <li class="main-header__item">
+                <a {{#if activeOrders}}class="active" {{/if}} href="/orders">Orders</a>
+            </li>
+            <li class="main-header__item">
+                <a {{#if activeAddProduct}}class="active" {{/if}} href="/admin/add-product">Add Product
+                </a>
+            </li>
+            <li class="main-header__item">
+                <a {{#if activeAdminProducts}}class="active" {{/if}} href="/admin/products">Admin Products
+                </a>
+            </li> 
+            {{/if}}
+        </ul>
+        <ul class="main-header__item-list">
+        {{#unless user}}
+            <li class="main-header__item">
+                <a {{#if activeLogin}}class="active" {{/if}} href="/login">Login</a>
+            </li>
+            <li class="main-header__item">
+                <a {{#if activeSignup}}class="active" {{/if}} href="/signup">Signup</a>
+            </li>
+        {{/unless}}
+        {{#if user}}
+             <li class="main-header__item">
+                 <form action="/logout" method="POST">
+                 <input type="hidden" value='{{csrfToken}}' name='_csrf'>
+                    <button type="submit">logout</button>
+                 </form>
+            </li>
+        {{/if}}
+        </ul>
+    </nav>
+                 
+</header>
+
+<nav class="mobile-nav">
+    <ul class="mobile-nav__item-list">
+        <li class="mobile-nav__item">
+            <a class="{{#if activeShop }}active{{/if}}" href="/">Shop</a>
+        </li>
+        <li class="mobile-nav__item">
+            <a {{#if activeProducts}}class="active" {{/if}} href="/products">Products</a>
+        </li>
+         {{#if user}}
+            <li class="main-header__item">
+                <a {{#if activeCart}}class="active" {{/if}} href="/cart">Cart</a>
+            </li>
+            <li class="main-header__item">
+                <a {{#if activeOrders}}class="active" {{/if}} href="/orders">Orders</a>
+            </li>
+            <li class="main-header__item">
+                <a {{#if activeAddProduct}}class="active" {{/if}} href="/admin/add-product">Add Product
+                </a>
+            </li>
+            <li class="main-header__item">
+                <a {{#if activeAdminProducts}}class="active" {{/if}} href="/admin/products">Admin Products
+                </a>
+            </li> 
+            {{/if}}
+        </ul>
+        <ul class="main-header__item-list">
+        {{#unless user}}
+            <li class="main-header__item">
+                <a {{#if activeLogin}}class="active" {{/if}} href="/login">Login</a>
+            </li>
+            <li class="main-header__item">
+                <a {{#if activeSignup}}class="active" {{/if}} href="/signup">Signup</a>
+            </li>
+        {{/unless}}
+        {{#if user}}
+             <li class="main-header__item">
+                 <form action="/logout" method="POST">
+                 <input type="hidden" value='{{csrfToken}}' name='_csrf'>
+                    <button type="submit">logout</button>
+                 </form>
+            </li>
+        {{/if}}
+    </ul>
+</nav>

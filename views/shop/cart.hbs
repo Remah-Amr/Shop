@@ -1,0 +1,25 @@
+<main>
+    {{#if products}}
+            <ul class="cart__item-list">
+        {{#each products}}
+               <li class="cart__item"><h1>{{productId.title}} </h1><h2>Quantity: {{qty}}</h2> 
+               <form action="/cart-delete-item" method="post">
+                <input type="hidden" name="productId" value="{{productId._id}}">
+                <input type="hidden" value='{{../csrfToken}}' name='_csrf'>
+                <button class="btn danger" type="submit">Delete</button>
+               </form> 
+               </li>
+        {{/each}}
+            </ul>
+            <hr>
+            <div class="centered">
+                    {{!-- <form action="/create-order" method="POST">
+                    <input type="hidden" value='{{csrfToken}}' name='_csrf'>
+                        <button type="submit" class="btn">Order Now!</button>
+                    </form> --}}
+                <a class= 'btn' href="/checkout"> Order Now!</a>    
+            </div>
+    {{else}}
+        <h1>No Product Found in Cart!</h1>
+    {{/if}}
+</main>

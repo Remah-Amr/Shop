@@ -1,0 +1,33 @@
+ <main>
+        {{#if prods}} <!--Accept true of false only-->
+            <div class="grid">
+                {{#each prods}}
+                    <article class="card product-item">
+                        <header class="card__header">
+                            <h1 class="product__title">{{this.title}}</h1>
+                        </header>
+                        <div class="card__image">
+                            <img src="/{{imageUrl}}" alt="{{title}}">
+                        </div>
+                        <div class="card__content">
+                            <h2 class="product__price">${{price}}</h2>
+                            <p class="product__description">{{description}}</p>
+                        </div>
+                        <div class="card__actions">
+                            <a href="/products/{{_id}}" class="btn">Details</a>
+                            <form action="/cart" method="POST">
+                            {{#if ../user}} <!--if remove ../ will consider property of products-->
+                              <button class="btn">Add to Cart</button>
+                            {{/if}}
+                              <input type="hidden" value='{{../csrfToken}}' name='_csrf'>  
+                              <input type="hidden" name="productId" value="{{_id}}">
+                            </form>
+                        </div>
+                    </article>
+                {{/each}}
+            </div> 
+            {{> _pagination}}
+        {{else}}
+            <h1>No Products Found!</h1>
+        {{/if}}
+</main>

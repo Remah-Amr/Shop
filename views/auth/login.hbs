@@ -1,0 +1,23 @@
+<main>
+        {{#if errorMessage}}
+        <div class="user-message user-message--error" >{{errorMessage}}</div>
+        {{/if}}
+        {{#if successMessage}}
+        <div class="user-message user-message--success" >{{successMessage}}</div>
+        {{/if}}
+        <form class="login-form" action="/login" method="POST" novalidate>
+            <div class="form-control">
+                <label for="email">E-Mail</label>
+                <input type="email" name="email" id="email">
+            </div>
+            <div class="form-control">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password">
+            </div>
+            <input type="hidden" value='{{csrfToken}}' name='_csrf'>
+            <button class="btn" type="submit">Login</button>
+        </form>
+        <div class="centered">
+        <a href="/reset">Forget Your Password!</a>
+        </div>
+</main>

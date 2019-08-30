@@ -1,0 +1,26 @@
+<!--{{#if errors}}
+{{#each errors}}
+<h1>{{text}}</h1>
+{{/each}}
+{{/if}}-->
+<main>
+        {{#if errorMessage}}
+        <div class="user-message user-message--error" >{{errorMessage}}</div>
+        {{/if}}
+        <form class="login-form" action="/signup" method="POST" novalidate>
+            <div class="form-control">
+                <label for="email">E-Mail</label>
+                <input type="email" name="email" id="email" {{#if keepUserInput}}value="{{info.email}}"{{/if}} {{#if emailErrorClass}}class='invalid'{{/if}}>
+            </div>
+            <div class="form-control">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" {{#if keepUserInput}}value="{{info.password}}"{{/if}} {{#if passwordErrorClass}}class = 'invalid'{{/if}}>
+            </div>
+            <div class="form-control">
+                <label for="confirmPassword">Confirm Password</label>
+                <input type="password" name="confirmPassword" id="confirmPassword" {{#if keepUserInput}}value="{{info.confirmPassword}}"{{/if}} {{#if confirmErrorClass}}class = 'invalid'{{/if}}>
+            </div>
+            <input type="hidden" value='{{csrfToken}}' name='_csrf'>
+            <button class="btn" type="submit">Signup</button>
+        </form>
+    </main>

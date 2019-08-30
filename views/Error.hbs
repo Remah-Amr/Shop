@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    {{!-- saf--}} 
+    <!--sdaf-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>{{pageTitle}}</title>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+
+<body>
+    <header class="main-header">
+        <nav class="main-header__nav">
+            <ul class="main-header__item-list">
+               <li class="main-header__item"><a class="{{#if activeShop }}active{{/if}}" href="/">Shop</a></li>
+                <li class="main-header__item"><a {{#if activeProducts}}class="active" {{/if}}href="/products">Products</a></li>
+                <li class="main-header__item"><a {{#if activeCart}}class="active" {{/if}}href="/cart">Cart</a></li>
+                <li class="main-header__item"><a {{#if activeAddProduct}}class="active" {{/if}}href="/admin/add-product">Add Product</a></li>
+                <li class="main-header__item"><a {{#if activeAdminProducts}}class="active" {{/if}}href="/admin/products">Admin Products</a></li>
+            </ul>
+        </nav>
+    </header>
+    <h1>Page Not Found!</h1>
+    
+</body>
+
+</html>

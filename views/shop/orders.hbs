@@ -1,0 +1,17 @@
+{{#if orders}}
+    <ul class="orders">
+                    {{#each orders}}
+                        <li class="orders__item">
+                            <h1>Order - # {{_id}}  # BY => {{userId.email}}</h1>
+                            <ul class="orders__products">
+                                {{#each items}}
+                                    <li class="orders__products-item">{{productId.title}} ({{qty}})</li>
+                                {{/each}}
+                            </ul>
+                             <h1>TOTAL COST : {{cost}} - <a href="/orders/{{_id}}">Invoice</a></h1>
+                        </li>
+                    {{/each}}
+                </ul>
+{{else}}
+<h1>NO ORDERS FOUND !</h1>
+{{/if}}

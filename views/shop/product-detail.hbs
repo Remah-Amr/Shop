@@ -1,0 +1,16 @@
+<main class="centered">
+    <h1>{{product.title}}</h1>
+    <hr>
+    <div>
+        <img src="/{{product.imageUrl}}" alt="{{product.title}}">
+    </div>
+    <h2>{{product.price}}</h2>
+    <p>{{product.description}}</p>
+    {{#if user}}
+    <form action="/cart" method="POST">
+        <button type="submit" class="btn">Add To Cart</button>
+        <input type="hidden" value='{{csrfToken}}' name='_csrf'>
+        <input type="hidden" name="productId" value="{{product.id}}"> {{!-- i can pass id by params , then catch by req.params.name, the same thing --}}
+    </form>
+    {{/if}}
+</main>
