@@ -187,7 +187,7 @@ exports.postReset = (req,res,next) => {
                 subject:'Reset Password',
                 html: ` 
                 <p>You requested a password reset</p>
-                <p>Click this <a href="https://polar-springs-55175.herokuapp.com/reset/${token}">link</a> to set a new password.</p>
+                <p>Click this <a href="https://arcane-spire-72778.herokuapp.com/reset/${token}">link</a> to set a new password.</p>
               ` // use packtic to write more than line
             })
             .then(result => {
