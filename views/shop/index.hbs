@@ -1,6 +1,7 @@
  <main>
+        <div id="output" class="webSocket"></div>
         {{#if prods}} <!--Accept true of false only-->
-            <div class="grid">
+            <div class="grid"> 
                 {{#each prods}}
                     <article class="card product-item">
                         <header class="card__header">
@@ -17,7 +18,7 @@
                             <a href="/products/{{_id}}" class="btn">Details</a>
                             <form action="/cart" method="POST">
                             {{#if ../user}} <!--if remove ../ will consider property of products-->
-                              <button class="btn">Add to Cart</button>
+                              <button class="btn" id="send">Add to Cart</button>
                             {{/if}}
                               <input type="hidden" value='{{../csrfToken}}' name='_csrf'>  
                               <input type="hidden" name="productId" value="{{_id}}">

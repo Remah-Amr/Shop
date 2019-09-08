@@ -5,7 +5,7 @@ module.exports = {
         if(userId.toString() === loggedUserId.toString()){ // when compare between to ids must conver to String
             return `<a href="/admin/edit-product/${productId}?edit=true" class="btn">Edit</a>
             <form action="/admin/delete-product" method="POST">
-            <button type="submit" class="btn">Delete</button>
+            <button type="submit"  class="btn">Delete</button>
             <input type="hidden" name="productId" value="${productId}"> 
             <input type="hidden" value='${csrfToken}' name='_csrf'>
             </form>`;

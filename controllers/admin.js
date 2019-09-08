@@ -1,6 +1,9 @@
 const Product = require('../models/product');
 const {validationResult} = require('express-validator');
 const fs = require('fs'); // to delete images from file
+const io = require('../socket');
+const imageMimeTypes = ['image/jpeg', 'image/png', 'images/gif','image/jpg']
+
 
 exports.getAddProduct = (req, res, next) => { 
     res.render('admin/edit-product', {
@@ -14,6 +17,7 @@ exports.getAddProduct = (req, res, next) => {
 
 
 exports.postAddProduct = (req,res,next)=>{
+  
   const errors = validationResult(req);
   if (!errors.isEmpty()) {      
     return res.status(422).render('admin/edit-product',{ // status which refer to validate is wrong
@@ -29,26 +33,27 @@ exports.postAddProduct = (req,res,next)=>{
     })
 }
     const title = req.body.title;
-    const image = req.file;
+    // const image = req.file;
     const price = req.body.price;
     const description = req.body.description;
     const userId = req.user._id;
     // console.log(image);
-    if(!image){ // like pdf or other or don't choose file
-      return res.status(422).render('admin/edit-product',{ // status which refer to validate is wrong
-        pageTitle: 'Add Product',
-        activeAddProduct: true,
-        errorMessage: 'attached file must be an image!',
-        keepUserInput: true,
-        product: { // i do that to be same syntax inside edit-product-hbs when call title and price , i avoid to use send req.body to hbs because syntax will differnce
-          title:req.body.title,
-          price:req.body.price,
-          description:req.body.description,
-        }
-})
-    }
-    const imageUrl = image.path; // property if you log image , and i store path in db not image because not effecient way
-    const product = new Product({title: title,price: price,imageUrl: imageUrl,description: description,userId: userId});      
+//     if(!image){ // like pdf or other or don't choose file
+//       return res.status(422).render('admin/edit-product',{ // status which refer to validate is wrong
+//         pageTitle: 'Add Product',
+//         activeAddProduct: true,
+//         errorMessage: 'attached file must be an image!',
+//         keepUserInput: true,
+//         product: { // i do that to be same syntax inside edit-product-hbs when call title and price , i avoid to use send req.body to hbs because syntax will differnce
+//           title:req.body.title,
+//           price:req.body.price,
+//           description:req.body.description,
+//         }
+// })
+//     }
+    // const imageUrl = image.path; // property if you log image , and i store path in db not image because not effecient way
+    const product = new Product({title: title,price: price,description: description,userId: userId});      
+    saveCover(product, req.body.cover) 
 
     product
     .save()
@@ -75,6 +80,15 @@ exports.postAddProduct = (req,res,next)=>{
       // return next(error);
     });
 };
+function saveCover(product, coverEncoded) {
+  if (coverEncoded == null) return
+  const cover = JSON.parse(coverEncoded)
+  if (cover != null && imageMimeTypes.includes(cover.type)) {
+    product.coverImage = new Buffer.from(cover.data, 'base64')
+    product.coverImageType = cover.type
+  }
+}
+
 
 // this method if id click on button Edit at page will include query in url then render page edit-product
 exports.getEditProduct = (req, res, next) => { 

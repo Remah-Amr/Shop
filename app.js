@@ -3,6 +3,7 @@ const path = require('path');
 const routes = require('./routes');
 const bodyParser = require('body-parser');
 const app = express();
+const socket = require('socket.io');
 const expressHbs = require('express-handlebars');
 const errorControllers = require('./controllers/error'); 
 const mongoose = require('mongoose');
@@ -14,9 +15,9 @@ const csrfProtection = csrf();
 const flash = require('connect-flash');
 const {editAndDelete} = require('./helpers/hbs');
 const passport = require('passport');
-const multer = require('multer');
+// const multer = require('multer');
 const keys = require('./config/keys');
-
+const compression = require('compression');
 
 // load handlebar helpers
 require('./helpers/helperHbs');
@@ -32,33 +33,40 @@ const adminRoutes = require('./routes/admin');
 const shopRoutes = require('./routes/shop');
 const authRoutes = require('./routes/auth');
 
+// compression middleware : reduce size of responce to make smaller and faster ('reduce css and js middlewares'), most hosting use compression by default so you don't need to it
+// use before handling any req
+// most hosting providers added ssl, compression, logging'operation on your app like post get so on' , but heroku not so you have to add it
+// app.use(compression());
+
 // load config
 require('./config/passport')(passport); // if put in auth file will succeeded
 
-const fileStorage = multer.diskStorage({ // to pass to multer middleware to determine distination and filename 
-    destination: (req, file, cb) => {
-      cb(null, 'images');
-    },
-    filename: (req, file, cb) => {
-      cb(null, new Date().toISOString() + '-' + file.originalname); // if you log imageurl you see fields like originalname and filename , mimetype , encoding from file object
-    }
-  });
+// const fileStorage = multer.diskStorage({ // to pass to multer middleware to determine distination and filename 
+//     destination: (req, file, cb) => {
+//       cb(null, 'images');
+//     },
+//     filename: (req, file, cb) => {
+//       cb(null, new Date().toISOString() + '-' + file.originalname); // if you log imageurl you see fields like originalname and filename , mimetype , encoding from file object
+//     }
+//   });
 
-  const fileFilter = (req, file, cb) => { // pass to multer to determine any type i save
-    if (
-      file.mimetype === 'image/png' ||
-      file.mimetype === 'image/jpg' ||
-      file.mimetype === 'image/jpeg'
-    ) {
-      cb(null, true); // save if type of image one of these
-    } else {
-      cb(null, false); // not save if else
-    }
-  };
+//   const fileFilter = (req, file, cb) => { // pass to multer to determine any type i save
+//     if (
+//       file.mimetype === 'image/png' ||
+//       file.mimetype === 'image/jpg' ||
+//       file.mimetype === 'image/jpeg'
+//     ) {
+//       cb(null, true); // save if type of image one of these
+//     } else {
+//       cb(null, false); // not save if else
+//     }
+//   };
+  
   
 // middleware bodyParser
-app.use(bodyParser.urlencoded({extended : false})); // urlencoded is basicly text data
-app.use(multer({storage: fileStorage,fileFilter: fileFilter}).single('image')); // name of field in hbs ,// single because one file'stored in req.file', array if multiple files 'stored in req.files'
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
+// app.use(bodyParser.urlencoded({extended : false})); // urlencoded is basicly text data
+// app.use(multer({storage: fileStorage,fileFilter: fileFilter}).single('image')); // name of field in hbs ,// single because one file'stored in req.file', array if multiple files 'stored in req.files'
 
 // session processing                                         
 const store = new mongodbStore({
@@ -130,9 +138,17 @@ mongoose.connect(keys.MONGO_URI,{ useNewUrlParser: true }) // i can connect with
     console.log('connected');
   }).catch(err => {console.log(err);})
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
-app.listen(port,()=>{
+const server = app.listen(port,()=>{
     console.log(`server started on port successfully`);
-    
 });
+
+const io = require('./socket').init(server); // pass server to method io 'like prev code but i put function in another file then fire it'
+    io.on('connection', socket => {
+      console.log('Client connected');
+      socket.on('chat',data => {
+        console.log(data); // work true
+        socket.broadcast.emit('chat',data);
+      })
+    });

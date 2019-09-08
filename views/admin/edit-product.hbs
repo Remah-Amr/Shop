@@ -3,7 +3,7 @@
          {{#if errorMessage}}
              <div class="user-message user-message--error" >{{errorMessage}}</div>
         {{/if}}
-        <form class="product-form" action="/admin/{{#if editing}}edit-product{{else}}add-product{{/if}}" method="POST" enctype="multipart/form-data">
+        <form class="product-form" action="/admin/{{#if editing}}edit-product{{else}}add-product{{/if}}" method="POST">
             <div class="form-control">
                 {{!--i get in route 'edit' the id from params which before ? , then if fetch product and send it--}}
                 <label for="title">Title</label> 
@@ -15,7 +15,7 @@
             </div> --}}
             <div class="form-control">
                 <label for="image">Image</label>
-                <input type="file" name="image" id="image">
+                <input type="file" name="cover" class="filepond">>
             </div>
             <div class="form-control">
                 <label for="price">Price</label>
@@ -30,6 +30,6 @@
                 <input type="hidden" value="{{product._id}}" name="productId">
              {{/ifCond}}
             <input type="hidden" value='{{csrfToken}}' name='_csrf'>
-            <button class="btn" type="submit">{{#if editing}}Edit Product{{else}}Add Product{{/if}}</button>
+            <button class="btn" id="send" type="submit">{{#if editing}}Edit Product{{else}}Add Product{{/if}}</button>
         </form>
 </main>

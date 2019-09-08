@@ -4,8 +4,10 @@ const Order = require('../models/order');
 const fs = require('fs');
 const path = require('path');
 const PDFDocument = require('pdfkit');
-const ITEMS_PER_PAGE = 1;
+const ITEMS_PER_PAGE = 10;
 const stripe = require('stripe')('sk_test_SVRDEXzhjXekCVehdmqa5pu600tCrdZF2t');
+// would replace by : const stripe = require('stripe')(proccess.env.STRIPE_KEY) => then add it to heroku 
+
 
 exports.getIndex = (req, res, next) => {
   const page = req.query.page || 1;

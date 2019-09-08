@@ -17,9 +17,9 @@ const transproter = nodemailer.createTransport({
     service: 'gmail',
     auth: {
            user: 'remah3335@gmail.com', // must go to الامان then وصول التطبيقات الاقل أمانا https://myaccount.google.com/lesssecureapps
-           pass: 'remah654312'
-       }
-   });
+           pass: 'remah654312'          // https://accounts.google.com/b/0/DisplayUnlockCaptcha 
+       }                                // from each deploy or push or edit you must click link and press continue above
+   });                                  // for more info check https://medium.com/@.jay/sending-email-using-express-js-with-nodemailer-in-heroku-71741f29463c
 exports.getLogin = (req,res,next) => {
     res.render('auth/login',{
         pageTitle: 'Login',

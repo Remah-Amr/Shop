@@ -16,7 +16,11 @@ const productSchema = new Schema({
     type: String,
     required: true
   },
-  imageUrl: {
+  coverImage: {
+    type: Buffer,
+    required: true
+  },
+  coverImageType: {
     type: String,
     required: true
   },
@@ -26,6 +30,13 @@ const productSchema = new Schema({
     required:true
   }
 });
+
+productSchema.virtual('coverImagePath').get(function() {
+  if (this.coverImage != null && this.coverImageType != null) {
+    return `data:${this.coverImageType};charset=utf-8;base64,${this.coverImage.toString('base64')}`
+  }
+})
+
                                 // name of your model , mongoose make this name lower case and plural and make this name of cllection
 module.exports = mongoose.model('Product',productSchema,'Products'); // 3rd par to explicit name of collection
                                           // send structure which my data go on 

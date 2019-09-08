@@ -3,7 +3,7 @@
 * {
   box-sizing: border-box;
 }
-
+.user-message
 body {
   padding: 0;
   margin: 0;
@@ -255,6 +255,15 @@ form {
   color: green;
 }
 
+
+.webSocket {
+  border-color: green;
+  background: rgb(200, 241, 189);
+  color: green;
+  text-align: center;
+  width: 90%;
+  margin: auto
+}
 
 .pagination {
   margin-top: 2rem;
