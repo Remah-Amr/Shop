@@ -25,3 +25,8 @@
 // for api you deploy as previous no changes but you can't open app since we don't have rendered views 
 // on your front end you change url 'instead of localhost' to your url app then deploy it as convinient way
 // with react you write npm run build 
+
+// to add changes
+//git add .
+//git commit -am "name"
+//git push heroku master

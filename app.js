@@ -15,7 +15,6 @@ const csrfProtection = csrf();
 const flash = require('connect-flash');
 const {editAndDelete} = require('./helpers/hbs');
 const passport = require('passport');
-// const multer = require('multer');
 const keys = require('./config/keys');
 const compression = require('compression');
 
@@ -41,32 +40,10 @@ const authRoutes = require('./routes/auth');
 // load config
 require('./config/passport')(passport); // if put in auth file will succeeded
 
-// const fileStorage = multer.diskStorage({ // to pass to multer middleware to determine distination and filename 
-//     destination: (req, file, cb) => {
-//       cb(null, 'images');
-//     },
-//     filename: (req, file, cb) => {
-//       cb(null, new Date().toISOString() + '-' + file.originalname); // if you log imageurl you see fields like originalname and filename , mimetype , encoding from file object
-//     }
-//   });
 
-//   const fileFilter = (req, file, cb) => { // pass to multer to determine any type i save
-//     if (
-//       file.mimetype === 'image/png' ||
-//       file.mimetype === 'image/jpg' ||
-//       file.mimetype === 'image/jpeg'
-//     ) {
-//       cb(null, true); // save if type of image one of these
-//     } else {
-//       cb(null, false); // not save if else
-//     }
-//   };
-  
   
 // middleware bodyParser
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: false }))
-// app.use(bodyParser.urlencoded({extended : false})); // urlencoded is basicly text data
-// app.use(multer({storage: fileStorage,fileFilter: fileFilter}).single('image')); // name of field in hbs ,// single because one file'stored in req.file', array if multiple files 'stored in req.files'
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: false })) // urlencoded is basicly text data
 
 // session processing                                         
 const store = new mongodbStore({

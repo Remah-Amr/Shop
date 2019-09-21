@@ -33,25 +33,9 @@ exports.postAddProduct = (req,res,next)=>{
     })
 }
     const title = req.body.title;
-    // const image = req.file;
     const price = req.body.price;
     const description = req.body.description;
     const userId = req.user._id;
-    // console.log(image);
-//     if(!image){ // like pdf or other or don't choose file
-//       return res.status(422).render('admin/edit-product',{ // status which refer to validate is wrong
-//         pageTitle: 'Add Product',
-//         activeAddProduct: true,
-//         errorMessage: 'attached file must be an image!',
-//         keepUserInput: true,
-//         product: { // i do that to be same syntax inside edit-product-hbs when call title and price , i avoid to use send req.body to hbs because syntax will differnce
-//           title:req.body.title,
-//           price:req.body.price,
-//           description:req.body.description,
-//         }
-// })
-//     }
-    // const imageUrl = image.path; // property if you log image , and i store path in db not image because not effecient way
     const product = new Product({title: title,price: price,description: description,userId: userId});      
     saveCover(product, req.body.cover) 
 
@@ -73,13 +57,14 @@ exports.postAddProduct = (req,res,next)=>{
           description:req.body.description,
           _id:req.body.productId
         }
-})
+      })
      
        console.log(err);
       // const error = new Error(err); // to fire default error middleware in app.js
       // return next(error);
     });
 };
+
 function saveCover(product, coverEncoded) {
   if (coverEncoded == null) return
   const cover = JSON.parse(coverEncoded)
@@ -95,7 +80,6 @@ exports.getEditProduct = (req, res, next) => {
   
     const editMode = req.query.edit; // only value attached with edit , see docs if confusion 
     // console.log(editMode); // http://localhost:9999/admin/edit-product/0.09390696256550957?edit=true&color=red => true
-    
     if (!editMode) {
       return res.redirect('/'); // if return we finish our code
     }
@@ -211,7 +195,6 @@ exports.postDeleteProduct = (req,res,next) => { // if i remove from products col
     console.log(err);
     
   })
-
 }
 
 exports.getProducts = (req,res,next) => {
